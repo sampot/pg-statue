@@ -1,0 +1,323 @@
+:root {
+  color-scheme: light dark;
+  --bg: #f0f9ff;
+  --panel: #ffffff;
+  --text: #0f172a;
+  --muted: #64748b;
+  --line: #cbd5e1;
+  --accent: #2563eb;
+  --accent-dim: #1d4ed8;
+  --on-accent: #ffffff;
+  --accent-soft: color-mix(in oklab, var(--accent) 14%, var(--panel));
+  --safe: #16a34a;
+  --safe-soft: color-mix(in oklab, var(--safe) 18%, var(--panel));
+  --danger: #dc2626;
+  --danger-soft: color-mix(in oklab, var(--danger) 16%, var(--panel));
+  --canvas-sky-top: #7dd3fc;
+  --canvas-sky-mid: #bae6fd;
+  --canvas-sky-bot: #ecfccb;
+  --canvas-grass: #86efac;
+  --canvas-lane: #fef9c3;
+  --canvas-lane-line: #fbbf24;
+  --canvas-border: #ca8a04;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0b1220;
+    --panel: #111827;
+    --text: #e5e7eb;
+    --muted: #94a3b8;
+    --line: #334155;
+    --accent: #60a5fa;
+    --accent-dim: #3b82f6;
+    --accent-soft: color-mix(in oklab, var(--accent) 16%, var(--panel));
+    --safe: #4ade80;
+    --safe-soft: color-mix(in oklab, var(--safe) 14%, var(--panel));
+    --danger: #f87171;
+    --danger-soft: color-mix(in oklab, var(--danger) 14%, var(--panel));
+    --canvas-sky-top: #0c4a6e;
+    --canvas-sky-mid: #075985;
+    --canvas-sky-bot: #14532d;
+    --canvas-grass: #166534;
+    --canvas-lane: #422006;
+    --canvas-lane-line: #ca8a04;
+    --canvas-border: #eab308;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  font-family:
+    "Avenir Next",
+    "Segoe UI",
+    "PingFang TC",
+    "Noto Sans TC",
+    sans-serif;
+  background:
+    radial-gradient(
+      900px 480px at 70% -10%,
+      color-mix(in oklab, var(--accent) 16%, transparent),
+      transparent 55%
+    ),
+    radial-gradient(
+      700px 400px at 10% 100%,
+      color-mix(in oklab, var(--safe) 12%, transparent),
+      transparent 50%
+    ),
+    var(--bg);
+  color: var(--text);
+}
+
+main {
+  width: min(100%, 32rem);
+  margin: 0 auto;
+  padding: 1.1rem 1rem max(1rem, env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.hero h1 {
+  margin: 0;
+  font-family:
+    "Iowan Old Style",
+    Palatino,
+    "Songti TC",
+    serif;
+  font-size: clamp(1.65rem, 4.5vw, 2.15rem);
+  letter-spacing: 0.06em;
+  text-align: center;
+}
+
+.tagline {
+  margin: 0.3rem 0 0;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.meter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem 1rem;
+  padding: 0.7rem 0.85rem;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+}
+
+.meter-item .label {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.meter-item strong {
+  font-size: 1.15rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.meter-actions {
+  margin-left: auto;
+}
+
+.referee-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.55rem 0.85rem;
+  border-radius: 999px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  border: 2px solid transparent;
+  transition:
+    background 0.2s,
+    border-color 0.2s,
+    color 0.2s;
+}
+
+.referee-badge[data-state="away"] {
+  background: var(--safe-soft);
+  border-color: color-mix(in oklab, var(--safe) 45%, transparent);
+  color: color-mix(in oklab, var(--safe) 85%, var(--text));
+}
+
+.referee-badge[data-state="watch"] {
+  background: var(--danger-soft);
+  border-color: color-mix(in oklab, var(--danger) 45%, transparent);
+  color: color-mix(in oklab, var(--danger) 88%, var(--text));
+  animation: pulse-watch 0.85s ease-in-out infinite;
+}
+
+@keyframes pulse-watch {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+.referee-icon {
+  font-size: 1.25rem;
+}
+
+.status {
+  margin: 0;
+  text-align: center;
+  font-weight: 700;
+  padding: 0.7rem 0.9rem;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+  min-height: 2.75rem;
+  line-height: 1.35;
+}
+
+.status.voice {
+  font-size: clamp(1.05rem, 3.5vw, 1.25rem);
+  letter-spacing: 0.08em;
+}
+
+.status[data-tone="win"] {
+  background: var(--safe-soft);
+  border-color: color-mix(in oklab, var(--safe) 35%, var(--line));
+}
+
+.status[data-tone="lose"] {
+  background: var(--danger-soft);
+  border-color: color-mix(in oklab, var(--danger) 35%, var(--line));
+}
+
+.stage {
+  display: flex;
+  justify-content: center;
+}
+
+#game {
+  display: block;
+  width: min(100%, 480px);
+  height: auto;
+  aspect-ratio: 480 / 560;
+  border-radius: 0.75rem;
+  box-shadow:
+    0 0 0 3px color-mix(in oklab, var(--accent) 35%, #000),
+    0 14px 36px rgba(0, 0, 0, 0.22);
+  touch-action: manipulation;
+  user-select: none;
+}
+
+.controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.controls button {
+  flex: 1;
+}
+
+button {
+  font: inherit;
+  border: 1px solid transparent;
+  background: var(--accent);
+  color: var(--on-accent);
+  border-radius: 0.55rem;
+  padding: 0.62rem 0.95rem;
+  min-height: 2.75rem;
+  font-weight: 650;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+button.secondary {
+  background: var(--accent-soft);
+  color: var(--text);
+  border-color: var(--line);
+}
+
+button:hover:not(:disabled) {
+  filter: brightness(1.05);
+}
+
+button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+button:disabled {
+  opacity: 0.48;
+  cursor: not-allowed;
+}
+
+.hold-move {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
+  width: 100%;
+  min-height: 5.5rem;
+  padding: 1rem;
+  font-size: 1.35rem;
+  border-radius: 1rem;
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--accent) 92%, white),
+    var(--accent-dim)
+  );
+  box-shadow:
+    0 4px 0 color-mix(in oklab, var(--accent-dim) 80%, #000),
+    0 10px 24px color-mix(in oklab, var(--accent) 28%, transparent);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.hold-move:disabled {
+  box-shadow: none;
+  transform: none;
+}
+
+.hold-move.is-active:not(:disabled) {
+  transform: translateY(3px);
+  box-shadow:
+    0 1px 0 color-mix(in oklab, var(--accent-dim) 80%, #000),
+    0 4px 12px color-mix(in oklab, var(--accent) 22%, transparent);
+  filter: brightness(1.08);
+}
+
+.hold-label {
+  font-weight: 800;
+  letter-spacing: 0.2em;
+}
+
+.hold-hint {
+  font-size: 0.78rem;
+  font-weight: 600;
+  opacity: 0.88;
+  letter-spacing: 0.06em;
+}
+
+.hint {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+@media (min-width: 40rem) {
+  main {
+    gap: 0.85rem;
+  }
+
+  .meter {
+    flex-wrap: nowrap;
+  }
+}

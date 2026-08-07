@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <meta
+      name="description"
+      content="一二三木頭人：按住前進、回頭立定，搶先衝線。純前端 Playgrounds SAM。"
+    />
+    <title>一二三木頭人</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main>
+      <header class="hero">
+        <h1>一二三木頭人</h1>
+        <p class="tagline">背對快跑 · 回頭立定 · 搶先衝線</p>
+      </header>
+
+      <section class="meter" aria-label="對局狀態">
+        <div class="meter-item">
+          <span class="label">生命</span>
+          <strong id="lives" aria-label="剩餘生命">♥♥♥</strong>
+        </div>
+        <div class="meter-item">
+          <span class="label">進度</span>
+          <strong id="progress">0%</strong>
+        </div>
+        <div class="meter-item">
+          <span class="label">最佳</span>
+          <strong id="best">—</strong>
+        </div>
+        <div class="meter-actions">
+          <button type="button" id="btn-mute" class="secondary" aria-pressed="true">
+            音效
+          </button>
+        </div>
+      </section>
+
+      <div
+        id="referee-badge"
+        class="referee-badge"
+        data-state="away"
+        aria-live="polite"
+      >
+        <span class="referee-icon" aria-hidden="true">🧑‍🏫</span>
+        <span id="referee-label">背對</span>
+      </div>
+
+      <p id="status" class="status voice" role="status">按住下方「前進」準備開局</p>
+
+      <div class="stage">
+        <canvas
+          id="game"
+          width="480"
+          height="560"
+          role="img"
+          aria-label="一二三木頭人賽道"
+        ></canvas>
+      </div>
+
+      <div class="controls">
+        <button type="button" id="btn-start">開局</button>
+      </div>
+
+      <button
+        type="button"
+        id="btn-move"
+        class="hold-move"
+        aria-label="按住前進"
+        disabled
+      >
+        <span class="hold-label">前進</span>
+        <span class="hold-hint">按住不放</span>
+      </button>
+
+      <p class="hint">
+        裁判背對時可按住「前進」；喊「木頭人」回頭必須立刻停。亂動會被逮、扣命並退回起點。與
+        1–2 位電腦小孩搶先衝線。致敬經典童玩，非任一商業作品復刻。
+      </p>
+    </main>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
