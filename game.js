@@ -105,6 +105,35 @@ export function saveBest(best) {
   } catch {
     /* quota / private mode */
   }
+  // KV 為權威；LS 僅快取
+  void fetch(`/api/kv/${STORAGE_KEY}`, { method: "PUT", body: JSON.stringify(best) }).catch(() => {});
+}
+
+/**
+ * KV 為權威；本地快取過舊時以遠端為準（wins 取大、bestTime 取小）
+ * @param {{ wins: number, bestTime: number | null }} current
+ * @returns {Promise<{ wins: number, bestTime: number | null }>}
+ */
+export async function mergeBestFromKv(current) {
+  try {
+    const res = await fetch(`/api/kv/${STORAGE_KEY}`);
+    if (!res.ok) return current;
+    const data = JSON.parse((await res.text()) || "null");
+    if (!data) return current;
+    const wins = Math.max(current.wins, Number(data.wins) || 0);
+    const remoteTime =
+      typeof data.bestTime === "number" && data.bestTime > 0 ? data.bestTime : null;
+    const bestTime =
+      current.bestTime == null
+        ? remoteTime
+        : remoteTime == null
+          ? current.bestTime
+          : Math.min(current.bestTime, remoteTime);
+    return { wins, bestTime };
+  } catch {
+    /* 無 KV 環境照玩 */
+    return current;
+  }
 }
 
 export class StatueGame {

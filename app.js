@@ -6,11 +6,17 @@ import {
   MAX_LIVES,
   drawGame,
   formatTime,
+  mergeBestFromKv,
 } from "./game.js";
 
 const audio = new StatueAudio();
 const game = new StatueGame();
 globalThis.__statue = game;
+// KV 為權威；本地快取過舊時以遠端為準
+void mergeBestFromKv(game.best).then((b) => {
+  game.best = b;
+  syncBest();
+});
 
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
